@@ -7,9 +7,10 @@
 
    <!-- Parent -->
    <parent>
-      <groupId>org.jboss.arquillian</groupId>
-      <artifactId>arquillian-build</artifactId>
-      <version>1.0.0-SNAPSHOT</version>
+      <groupId>org.jboss.arquillian.extension</groupId>
+      <artifactId>arquillian-performance-parent</artifactId>
+      <version>1.0.0.CR1-SNAPSHOT</version>
+      <relativePath>../pom.xml</relativePath>
    </parent>
 
    <!-- Model Version -->

@@ -6,7 +6,7 @@ public class HardWorker
    { 
       try
       {
-         Thread.sleep(10);
+         Thread.sleep(100);
       }
       catch (InterruptedException ie)
       {

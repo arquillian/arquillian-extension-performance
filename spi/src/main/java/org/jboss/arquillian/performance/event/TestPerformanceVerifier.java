@@ -16,18 +16,18 @@
  */
 package org.jboss.arquillian.performance.event;
 
-import java.lang.annotation.Annotation;
-
+import org.jboss.arquillian.core.api.Instance;
+import org.jboss.arquillian.core.api.annotation.Inject;
+import org.jboss.arquillian.core.api.annotation.Observes;
 import org.jboss.arquillian.performance.annotation.Performance;
 import org.jboss.arquillian.performance.exception.PerformanceException;
 import org.jboss.arquillian.performance.meta.PerformanceMethodResult;
 import org.jboss.arquillian.performance.meta.PerformanceSuiteResult;
-import org.jboss.arquillian.spi.TestResult;
-import org.jboss.arquillian.spi.TestResult.Status;
-import org.jboss.arquillian.spi.core.Instance;
-import org.jboss.arquillian.spi.core.annotation.Inject;
-import org.jboss.arquillian.spi.core.annotation.Observes;
-import org.jboss.arquillian.spi.event.suite.Test;
+import org.jboss.arquillian.test.spi.TestResult;
+import org.jboss.arquillian.test.spi.TestResult.Status;
+import org.jboss.arquillian.test.spi.event.suite.Test;
+
+import java.lang.annotation.Annotation;
 
 /**
  * 
@@ -49,6 +49,7 @@ public class TestPerformanceVerifier
    
    public void callback(@Observes Test event) throws Exception
    {
+       System.out.println("INSIDE TESTPERFORMANCEVERIFIER");
       TestResult result = testResultInst.get();
       if(result != null)
       {
@@ -61,6 +62,7 @@ public class TestPerformanceVerifier
         
          if(performance != null)
          {
+             System.out.println("For test: "+event.toString()+", it took: "+(result.getEnd()-result.getStart()));
             if(performance.time() > 0 &&
                performance.time() < (result.getEnd()-result.getStart()))
             {

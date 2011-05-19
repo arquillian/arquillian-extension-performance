@@ -19,12 +19,15 @@ package org.jboss.arquillian.performance.event;
 import org.jboss.arquillian.performance.annotation.PerformanceTest;
 import org.jboss.arquillian.performance.meta.PerformanceClassResult;
 import org.jboss.arquillian.performance.meta.PerformanceSuiteResult;
-import org.jboss.arquillian.spi.TestClass;
-import org.jboss.arquillian.spi.core.InstanceProducer;
-import org.jboss.arquillian.spi.core.annotation.Inject;
-import org.jboss.arquillian.spi.core.annotation.Observes;
-import org.jboss.arquillian.spi.core.annotation.SuiteScoped;
-import org.jboss.arquillian.spi.event.suite.BeforeClass;
+
+import org.jboss.arquillian.core.api.InstanceProducer;
+import org.jboss.arquillian.core.api.annotation.Inject;
+import org.jboss.arquillian.core.api.annotation.Observes;
+
+import org.jboss.arquillian.test.spi.annotation.SuiteScoped;
+import org.jboss.arquillian.test.spi.event.suite.BeforeClass;
+
+import org.jboss.arquillian.test.spi.TestClass;
 
 /**
  * 

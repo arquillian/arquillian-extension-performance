@@ -7,9 +7,10 @@
 
    <!-- Parent -->
    <parent>
-      <groupId>org.jboss.arquillian</groupId>
-      <artifactId>arquillian-build</artifactId>
-      <version>1.0.0-SNAPSHOT</version>
+      <groupId>org.jboss.arquillian.extension</groupId>
+      <artifactId>arquillian-performance-parent</artifactId>
+      <version>1.0.0.CR1-SNAPSHOT</version>
+      <relativePath>../pom.xml</relativePath>
    </parent>
 
    <!-- Model Version -->
@@ -27,11 +28,6 @@
 
     <!-- Versioning -->
 		<version.weld_core>1.1.0.CR1</version.weld_core>
-		<version.org.apache.openejb_openejb.core>3.1.2</version.org.apache.openejb_openejb.core>
-		<version.openwebbeans>1.0.0-M4</version.openwebbeans>
-		<version.jboss_60>6.0.0.20100721-M4</version.jboss_60>
-		<version.jboss_51>5.1.0.GA</version.jboss_51>
-		<version.glassfish_30>3.0.1-b02</version.glassfish_30>
 		<version.jboss_ejb3>3.1.0</version.jboss_ejb3>
 
    </properties>
@@ -61,11 +57,9 @@
          </build>
       </profile>
       <profile>
-         <id>default</id>
-         <activation>
-            <activeByDefault>true</activeByDefault>
-         </activation>
+         <id>not-used-cdi</id>
          <dependencies>
+         <!-- currently not used so commented out.
             <dependency>
                <groupId>org.jboss.arquillian.container</groupId>
                <artifactId>arquillian-weld-se-embedded-1.1</artifactId>
@@ -98,10 +92,12 @@
               <version>2.2</version>
               <scope>test</scope>
             </dependency>
+            -->
          </dependencies>
          <dependencyManagement>
            <dependencies>
              <!-- org.jboss.weld -->
+             <!--
              <dependency>
                <groupId>org.jboss.weld</groupId>
                <artifactId>weld-core-bom</artifactId>
@@ -109,6 +105,7 @@
                <type>pom</type>
                <scope>import</scope>
              </dependency>
+             -->
            </dependencies>
          </dependencyManagement>
          <build>
@@ -118,14 +115,38 @@
                   <artifactId>maven-surefire-plugin</artifactId>
                   <configuration>
                      <includes>
-                        <include>org/jboss/arquillian/performance/cdi/WorkHardCdiTestCase.class</include>
+                        <include>org/jboss/arquillian/performance/junit/WorkHardTestCase.class</include>
                      </includes>
                   </configuration>
                </plugin>
             </plugins>
          </build>
       </profile>
+
+      <profile>
+         <id>default</id>
+         <activation>
+            <activeByDefault>true</activeByDefault>
+         </activation>
+         <dependencies>
+         </dependencies>
+         <build>
+            <plugins>
+               <plugin>
+                  <artifactId>maven-surefire-plugin</artifactId>
+                  <configuration>
+                     <includes>
+                        <include>org/jboss/arquillian/performance/junit/WorkHardTestCase.class</include>
+                     </includes>
+                  </configuration>
+               </plugin>
+            </plugins>
+         </build>
+      </profile>
+
    </profiles>
+
+
    <!-- Dependencies -->
    <dependencies>
       <dependency>
@@ -134,11 +155,34 @@
          <version>${project.version}</version>
       </dependency>
       <dependency>
-         <groupId>org.jboss.arquillian</groupId>
-         <artifactId>arquillian-spi</artifactId>
+         <groupId>org.jboss.arquillian.core</groupId>
+         <artifactId>arquillian-core-spi</artifactId>
          <version>${project.version}</version>
       </dependency>
-      <!--
+      <dependency>
+         <groupId>org.jboss.arquillian.core</groupId>
+         <artifactId>arquillian-core-api</artifactId>
+         <version>${project.version}</version>
+      </dependency>
+      <dependency>
+         <groupId>org.jboss.arquillian.core</groupId>
+         <artifactId>arquillian-core-impl-base</artifactId>
+         <version>${project.version}</version>
+      </dependency>
+      <dependency>
+         <groupId>org.jboss.arquillian.test</groupId>
+         <artifactId>arquillian-test-spi</artifactId>
+         <version>${project.version}</version>
+      </dependency>
+
+      <dependency>
+         <groupId>org.jboss.arquillian.junit</groupId>
+         <artifactId>arquillian-junit-standalone</artifactId>
+         <version>${project.version}</version>
+         <scope>test</scope>
+      </dependency>
+
+      <!-- External Projects -->
       <dependency>
          <groupId>javax.enterprise</groupId> 
          <artifactId>cdi-api</artifactId> 
@@ -151,21 +195,12 @@
          <version>1.0</version> 
          <scope>test</scope>
       </dependency>
-      -->
       <dependency>
          <groupId>javax.persistence</groupId> 
          <artifactId>persistence-api</artifactId> 
          <version>1.0</version> 
          <scope>test</scope>
-      </dependency>
-      <dependency>
-         <groupId>org.jboss.arquillian</groupId>
-         <artifactId>arquillian-junit</artifactId>
-         <version>${project.version}</version>
-         <scope>test</scope>
-      </dependency>
-
-      <!-- External Projects -->
+      </dependency>      
       <!--
       <dependency>
          <groupId>org.mockito</groupId>
@@ -193,6 +228,17 @@
                </execution>
             </executions>
          </plugin>
+         <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <testExcludes>
+            <exclude>**/cdi/**</exclude>
+            <exclude>**/ejb/**</exclude>
+          </testExcludes>
+          <!-- put your configurations here -->
+        </configuration>
+      </plugin>
       </plugins>
    </build>
 </project>
