@@ -18,7 +18,7 @@
 
    <!-- Artifact Configuration -->
    <groupId>org.jboss.arquillian.extension</groupId>
-   <artifactId>arquillian-performance-spi</artifactId>
+   <artifactId>arquillian-performance-impl</artifactId>
    <name>Arquillian Extension Performance SPI</name>
    <description>Extension SPI to add performance measurement to Arquillian</description>
 
