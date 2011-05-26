@@ -1,12 +1,10 @@
 package org.jboss.arquillian.performance.junit;
 
 import org.jboss.arquillian.junit.Arquillian;
+import org.jboss.arquillian.performance.HardWorker;
 import org.jboss.arquillian.performance.annotation.Performance;
 import org.jboss.arquillian.performance.annotation.PerformanceTest;
 import org.jboss.arquillian.performance.exception.PerformanceException;
-
-import org.jboss.arquillian.performance.cdi.HardWorker;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;

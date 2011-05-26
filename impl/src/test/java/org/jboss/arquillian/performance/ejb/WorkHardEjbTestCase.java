@@ -1,8 +1,5 @@
 package org.jboss.arquillian.performance.ejb;
 
-import javax.ejb.EJB;
-
-import org.jboss.arquillian.api.Deployment;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.junit.Assert;

@@ -1,8 +1,6 @@
 package org.jboss.arquillian.performance.ejb;
 
 import javax.annotation.Resource;
-import javax.ejb.EJBContext;
-import javax.ejb.Stateless;
 
 public @Stateless class WorkHardBean implements WorkHard
 {

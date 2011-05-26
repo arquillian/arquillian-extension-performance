@@ -19,6 +19,7 @@ package org.jboss.arquillian.performance.event;
 
 import org.jboss.arquillian.core.spi.LoadableExtension;
 
+
 /**
  * @author Ståle W. Pedersen <stale.pedersen@jboss.org>
  */

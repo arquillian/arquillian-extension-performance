@@ -1,4 +1,4 @@
-package org.jboss.arquillian.performance.cdi;
+package org.jboss.arquillian.performance;
 
 public class HardWorker
 {

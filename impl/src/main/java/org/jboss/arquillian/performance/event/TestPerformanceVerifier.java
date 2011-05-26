@@ -16,6 +16,8 @@
  */
 package org.jboss.arquillian.performance.event;
 
+import java.lang.annotation.Annotation;
+
 import org.jboss.arquillian.core.api.Instance;
 import org.jboss.arquillian.core.api.annotation.Inject;
 import org.jboss.arquillian.core.api.annotation.Observes;
@@ -26,8 +28,6 @@ import org.jboss.arquillian.performance.meta.PerformanceSuiteResult;
 import org.jboss.arquillian.test.spi.TestResult;
 import org.jboss.arquillian.test.spi.TestResult.Status;
 import org.jboss.arquillian.test.spi.event.suite.Test;
-
-import java.lang.annotation.Annotation;
 
 /**
  * 

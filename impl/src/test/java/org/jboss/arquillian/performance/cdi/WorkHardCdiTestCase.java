@@ -2,8 +2,8 @@ package org.jboss.arquillian.performance.cdi;
 
 import javax.inject.Inject;
 
-import org.jboss.arquillian.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
+import org.jboss.arquillian.performance.HardWorker;
 import org.jboss.arquillian.performance.annotation.Performance;
 import org.jboss.arquillian.performance.annotation.PerformanceTest;
 import org.jboss.arquillian.performance.exception.PerformanceException;

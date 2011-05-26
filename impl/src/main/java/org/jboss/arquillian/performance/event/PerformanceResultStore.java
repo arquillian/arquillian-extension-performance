@@ -28,13 +28,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.jboss.arquillian.performance.exception.PerformanceException;
-import org.jboss.arquillian.performance.meta.PerformanceClassResult;
-import org.jboss.arquillian.performance.meta.PerformanceSuiteResult;
 import org.jboss.arquillian.core.api.Instance;
 import org.jboss.arquillian.core.api.annotation.Inject;
 import org.jboss.arquillian.core.api.annotation.Observes;
-
+import org.jboss.arquillian.performance.exception.PerformanceException;
+import org.jboss.arquillian.performance.meta.PerformanceClassResult;
+import org.jboss.arquillian.performance.meta.PerformanceSuiteResult;
 import org.jboss.arquillian.test.spi.TestResult;
 import org.jboss.arquillian.test.spi.event.suite.Test;
 
