@@ -7,9 +7,10 @@
 
    <!-- Parent -->
    <parent>
-      <groupId>org.jboss.arquillian</groupId>
-      <artifactId>arquillian-build</artifactId>
+      <groupId>org.jboss.arquillian.extension</groupId>
+      <artifactId>arquillian-performance-parent</artifactId>
       <version>1.0.0.CR1-SNAPSHOT</version>
+      <relativePath>../pom.xml</relativePath>
    </parent>
 
    <!-- Model Version -->
@@ -17,15 +18,9 @@
 
    <!-- Artifact Configuration -->
    <groupId>org.jboss.arquillian.extension</groupId>
-   <artifactId>arquillian-performance-parent</artifactId>
-   <packaging>pom</packaging>
-   <name>Arquillian Extension Performance Aggregator</name>
-   <url>http://www.jboss.org</url>
-   <description>Arquillian Extension Performance Aggregator</description>
-
-    <modules>
-      <module>api</module>
-      <module>impl</module>
-    </modules>
+   <artifactId>arquillian-performance-api</artifactId>
+   <name>Arquillian Extension Performance API</name>
+   <description>Extension API to add performance measurement to Arquillian</description>
 
 </project>
+
