@@ -71,8 +71,8 @@ public class PerformanceMethodResult implements Serializable
    {     
       if(resultsThreshold < 1)
          resultsThreshold = 1;
-      System.out.println("Comparing "+testMethod+", was: "+actualTime+", latest result: "
-            +methodResult.getActualTime()+", threshold: "+resultsThreshold);
+      //System.out.println("Comparing "+testMethod+", was: "+actualTime+", latest result: "
+      //      +methodResult.getActualTime()+", threshold: "+resultsThreshold);
       if(resultsThreshold * actualTime < methodResult.getActualTime())
       {
          throw new PerformanceException("Degrading results; earlier result for method: "+
