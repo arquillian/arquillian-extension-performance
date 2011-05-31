@@ -27,8 +27,7 @@ public class PerformanceExtension implements LoadableExtension {
     @Override
     public void register(ExtensionBuilder builder) {
         builder.observer(PerformanceTestParser.class)
-               .observer(TestPerformanceVerifier.class)
-               .observer(PerformanceResultStore.class);
+               .observer(PerformanceAnalyzer.class);
     }
 
 }

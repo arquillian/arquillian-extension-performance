@@ -40,10 +40,7 @@ public class PerformanceTestParser
 {
    @Inject @SuiteScoped
    private InstanceProducer<PerformanceSuiteResult> suiteResultInst;
-   
-   /**
-    * @see org.jboss.arquillian.spi.event.suite.EventHandler#callback(org.jboss.arquillian.spi.Context, java.lang.Object)
-    */
+
    public void callback(@Observes BeforeClass event) throws Exception
    {
       parsePerformanceRules(event.getTestClass());
