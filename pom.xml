@@ -27,7 +27,12 @@
     <properties>
 
         <!-- Versioning -->
-        <version.arquillian_core>1.0.0.Beta1</version.arquillian_core>
+        <version.arquillian_core>1.0.0.CR1</version.arquillian_core>
+
+        <!-- override from parent -->
+        <version.release.plugin>2.1</version.release.plugin>
+        <maven.compiler.target>1.5</maven.compiler.target>
+        <maven.compiler.source>1.5</maven.compiler.source>
 
     </properties>
 
@@ -36,6 +41,13 @@
             <dependency>
                 <groupId>org.jboss.arquillian</groupId>
                 <artifactId>arquillian-bom</artifactId>
+                <version>${version.arquillian_core}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.jboss.arquillian</groupId>
+                <artifactId>arquillian-build</artifactId>
                 <version>${version.arquillian_core}</version>
                 <type>pom</type>
                 <scope>import</scope>
@@ -51,20 +63,14 @@
     <build>
         <plugins>
             <plugin>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <inherited>true</inherited>
+                <artifactId>maven-release-plugin</artifactId>
                 <configuration>
-                    <source>1.6</source>
-                    <target>1.6</target>
-                    <showDeprecation>false</showDeprecation>
-                    <showWarnings>true</showWarnings>
-                    <optimize>true</optimize>
-                    <compilerVersion>1.6</compilerVersion>
-                    <fork>true</fork>
-                    <argLine>-Xmx512M</argLine>
+                    <autoVersionSubmodules>true</autoVersionSubmodules>
+                    <pushChanges>false</pushChanges>
+                    <localCheckout>true</localCheckout>
                 </configuration>
             </plugin>
-        </plugins>    
+        </plugins>
     </build>
 
 </project>
