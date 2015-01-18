@@ -20,6 +20,7 @@ import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Specifies the maximum execution time allowed for a test method.
@@ -37,4 +38,5 @@ public @interface Performance {
     * @return
     */
    double time();
+   TimeUnit unit() default TimeUnit.MILLISECONDS;
 }
