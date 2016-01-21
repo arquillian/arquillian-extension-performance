@@ -9,13 +9,12 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-@PerformanceTest(resultsThreshold=2)
+@PerformanceTest(resultsThreshold=1.5)
 @RunWith(Arquillian.class)
 public class WorkHardTestCase
 {
 
    @Test
-   @Performance(time=30)
    public void doHardWork() throws Exception 
    {
       HardWorker worker = new HardWorker();
