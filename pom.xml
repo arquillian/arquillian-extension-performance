@@ -16,7 +16,7 @@
     <!-- Artifact Configuration -->
     <groupId>org.jboss.arquillian.extension</groupId>
     <artifactId>arquillian-performance-parent</artifactId>
-    <version>1.0.0.CR2-SNAPSHOT</version>
+    <version>1.0.0.CR2</version>
     <packaging>pom</packaging>
     <name>Arquillian Extension Performance Aggregator</name>
     <url>http://www.jboss.org</url>
