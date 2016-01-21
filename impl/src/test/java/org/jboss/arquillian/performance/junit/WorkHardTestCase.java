@@ -18,7 +18,6 @@ public class WorkHardTestCase
    public void doHardWork() throws Exception 
    {
       HardWorker worker = new HardWorker();
-      
       Assert.assertEquals(21, worker.workingHard(), 0d);
    }
    
