@@ -20,8 +20,6 @@ public class WorkHardTestCase
    {
       HardWorker worker = new HardWorker();
       
-      Thread.sleep(1000);
-      
       Assert.assertEquals(21, worker.workingHard(), 0d);
    }
    
