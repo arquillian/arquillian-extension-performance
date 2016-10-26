@@ -46,7 +46,8 @@ import java.util.List;
 
 public class PerformanceAnalyzer
 {
-    private final String folder = "arq-perf";  // TODO: should rewrite this some day
+	private final String ARQ_PERF_FOLDER = "arq-perf-folder";
+    private final String folder = "arq-perf"; 
 
     private final SimpleDateFormat fileFormat = new SimpleDateFormat("dd.MM.yy.mm.ss");
 
@@ -118,7 +119,7 @@ public class PerformanceAnalyzer
 
     private List<PerformanceSuiteResult> findEarlierResults(final PerformanceSuiteResult currentResult)
     {
-        File perfDir = new File(System.getProperty("user.dir") + File.separator + folder);
+        File perfDir = getArqPerfFolder();
         File[] files = perfDir.listFiles(new FileFilter()
         {
             public boolean accept(File pathName)
@@ -139,14 +140,29 @@ public class PerformanceAnalyzer
         }
         return prevResults;
     }
+    
+    private File getArqPerfFolder() {
+    	
+    	String arqPerfFolder = System.getProperty(ARQ_PERF_FOLDER);
+    	System.out.println(arqPerfFolder);
+    	if (arqPerfFolder == null) {
+    		arqPerfFolder = System.getProperty("user.dir");
+    	}
+    	
+    	return new File(arqPerfFolder + File.separator + folder);
+    }
 
     private PerformanceSuiteResult getResultFromFile(File file)
     {
+    	FileInputStream fis = null;
+    	ObjectInputStream ois = null;
         try
         {
-            FileInputStream fis = new FileInputStream(file);
-            ObjectInputStream ois = new ObjectInputStream(fis);
-            return (PerformanceSuiteResult) ois.readObject();
+            fis = new FileInputStream(file);
+            ois = new ObjectInputStream(fis);
+            PerformanceSuiteResult result = (PerformanceSuiteResult) ois.readObject();
+            
+            return result;
         }
         catch (IOException ioe)
         {
@@ -156,10 +172,13 @@ public class PerformanceAnalyzer
         {
             e.printStackTrace();
             return null;
+        } finally {
+        	closeStreamSilently(fis);
+        	closeStreamSilently(ois);
         }
     }
 
-    /**
+	/**
      * 1. make sure folder exists, if not create folder
      * 2. generate file name
      * 3. save file
@@ -169,15 +188,15 @@ public class PerformanceAnalyzer
     private void storePerformanceSuiteResult(PerformanceSuiteResult suiteResult)
     {
         String filename = suiteResult.getName() + "-" + fileFormat.format(new Date()) + ".ser";
-        String currentPath = System.getProperty("user.dir") + File.separator + folder + File.separator;
+        File currentPath = getArqPerfFolder();
         boolean fileStatus = true;
-        if (!new File(currentPath).isDirectory())
-            fileStatus = new File(currentPath).mkdirs();
+        if (!currentPath.isDirectory())
+            fileStatus = currentPath.mkdirs();
         if (fileStatus)
         {
             try
             {
-                FileOutputStream fos = new FileOutputStream(currentPath + filename);
+                FileOutputStream fos = new FileOutputStream(currentPath.getPath() + File.separator + filename);
                 ObjectOutputStream out = new ObjectOutputStream(fos);
                 out.writeObject(suiteResult);
                 out.close();
@@ -206,7 +225,9 @@ public class PerformanceAnalyzer
             for(Annotation a : annotations)
                 if(a.annotationType().getName().equals(Performance.class.getCanonicalName()))
                     performance = (Performance) a;
-
+            
+            
+            double maxTime = -1;
             if(performance != null)
             {
                 //System.out.println("For test: "+event.toString()+", it took: "+(result.getEnd()-result.getStart()));
@@ -218,18 +239,28 @@ public class PerformanceAnalyzer
                             new PerformanceException("The test didnt finish within the specified time: "
                                     +performance.time()+"ms, it took "+(result.getEnd()-result.getStart())+"ms."));
                 }
-
-                // fetch suiteResult, get the correct classResult and append the test to that
-                // classResult.
-                PerformanceSuiteResult suiteResult = suiteResultInst.get();
-                if(suiteResult != null) {
-                    suiteResult.getResult(event.getTestClass().getName()).addMethodResult(
-                            new PerformanceMethodResult(
-                                    performance.time(),
-                                    (result.getEnd()-result.getStart()),
-                                    event.getTestMethod()));
-                }
+                
+                maxTime = performance.time();
+            }
+            
+            // fetch suiteResult, get the correct classResult and append the test to that
+            // classResult.
+            PerformanceSuiteResult suiteResult = suiteResultInst.get();
+            if(suiteResult != null) {
+                suiteResult.getResult(event.getTestClass().getName()).addMethodResult(
+                        new PerformanceMethodResult(
+                        		maxTime, result.getEnd()-result.getStart(), event.getTestMethod()));
             }
         }
     }
+    
+    private void closeStreamSilently(InputStream is) {
+    	if (is != null) {
+    		try {
+				is.close();
+			} catch (IOException e) {
+				
+			}
+    	}
+	}
 }

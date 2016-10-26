@@ -107,6 +107,11 @@
                             <includes>
                                 <include>org/jboss/arquillian/performance/junit/WorkHardTestCase.class</include>
                             </includes>
+                            <!--  
+                            <systemPropertyVariables>
+                            	<arq-perf-folder>${project.basedir}/target</arq-perf-folder>
+                            </systemPropertyVariables>
+                            -->
                         </configuration>
                     </plugin>
                 </plugins>
