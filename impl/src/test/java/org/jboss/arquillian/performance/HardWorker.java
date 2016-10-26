@@ -14,4 +14,16 @@ public class HardWorker
       }
       return 21;
    }
+
+   public double workingHardSeconds() {
+       try
+       {
+          Thread.sleep(1000);
+       }
+       catch (InterruptedException ie)
+       {
+          ie.printStackTrace();
+       }
+       return 21;
+   }
 }

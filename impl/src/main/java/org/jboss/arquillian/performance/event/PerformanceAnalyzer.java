@@ -34,6 +34,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Compares and stores test durations. 
@@ -209,14 +210,15 @@ public class PerformanceAnalyzer
 
             if(performance != null)
             {
-                //System.out.println("For test: "+event.toString()+", it took: "+(result.getEnd()-result.getStart()));
+                TimeUnit unit = performance.unit();
+                long executionTime = result.getEnd()-result.getStart();
                 if(performance.time() > 0 &&
-                        performance.time() < (result.getEnd()-result.getStart()))
+                        performance.time() < unit.convert(executionTime, TimeUnit.MILLISECONDS))
                 {
                     result.setStatus(TestResult.Status.FAILED);
                     result.setThrowable(
                             new PerformanceException("The test didnt finish within the specified time: "
-                                    +performance.time()+"ms, it took "+(result.getEnd()-result.getStart())+"ms."));
+                                    +performance.time() + unit.name() + ", it took "+ unit.convert(executionTime, TimeUnit.MILLISECONDS) + unit.name()));
                 }
 
                 // fetch suiteResult, get the correct classResult and append the test to that
@@ -226,7 +228,7 @@ public class PerformanceAnalyzer
                     suiteResult.getResult(event.getTestClass().getName()).addMethodResult(
                             new PerformanceMethodResult(
                                     performance.time(),
-                                    (result.getEnd()-result.getStart()),
+                                    executionTime,
                                     event.getTestMethod()));
                 }
             }
