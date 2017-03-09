@@ -1,0 +1,74 @@
+Performance
+===========
+
+The performance extension to Arquillian is a simple way of checking that
+the code you want to test performs within the range you want it to. It
+can also automatically catch any performance regressions that might be
+added to your applications and as Arquillian itself, it is very easy to
+use.
+
+Code example:
+
+[source,java]
+----
+// include other arquillian imports here...
+import org.jboss.arquillian.performance.annotation.Performance;
+import org.jboss.arquillian.performance.annotation.PerformanceTest;
+
+@PerformanceTest(resultsThreshold=2)
+@RunWith(Arquillian.class)
+public class WorkHardCdiTestCase
+{
+   @Deployment
+   public static JavaArchive createDeployment() {
+       return ShrinkWrap.create(JavaArchive.class ,"test.jar")
+               .addPackage( WorkHard.class.getPackage())
+               .addAsManifestResource(
+                       EmptyAsset.INSTANCE,
+                       ArchivePaths.create("beans.xml"));
+   }
+
+   @Inject HardWorker worker;
+
+   @Test
+   @Performance(time=20)
+   public void doHardWork() throws Exception
+   {
+      Assert.assertEquals(21, worker.workingHard(), 0d);
+   }
+}
+----
+
+As you can see the only two additions needed are `@Performance` and
+`@PerformanceTest`. They do different things and can be used separately
+or combined.
+
+`@Performance` requires one argument, `time` (a double) which sets the
+required maximum time in milliseconds that the test is allowed to spend.
+If the test exceeds that time it will fail with an exception explaining
+the cause.
+
+`@PerformanceTest` will cause every test run of that test to be saved
+and every new run will compare results with previous runs. If the new
+test run exceeds the previous runs with a defined threshold an exception
+will be thrown. The threshold can be set with the parameter
+`resultsThreshold`. It is by default set to 1d.
+
+How threshold is calculated: `resultsThreshold * newTime < oldTime`.
+
+Maven setup example:
+
+The only extra dependency needed is to add `arquillian-performance` to
+your pom.xml. Take a look at the
+http://arquillian.org/guides/getting_started[Getting
+started] to see how you set up arquillian using maven.
+
+[source,xml]
+----
+<dependency>
+   <groupId>org.jboss.arquillian.extension</groupId>
+   <artifactId>arquillian-performance-impl</artifactId>
+   <version>${arquillian.version}</version>
+   <scope>test</scope>
+</dependency>
+----
