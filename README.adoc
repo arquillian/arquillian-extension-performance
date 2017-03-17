@@ -1,13 +1,14 @@
-ifdef::env-github[]
-:tip-caption: :bulb:
-:note-caption: :information_source:
-:important-caption: :heavy_exclamation_mark:
-:caution-caption: :fire:
-:warning-caption: :warning:
-endif::[]
-
-= Performance
+= Arquillian Performance Extension
 :icons: font
+:numbered:
+:sectlink:
+:sectanchors:
+:sectid:
+:source-language: java
+:source-highlighter: coderay
+:sectnums:
+:icons: font
+:toc: left
 
 The performance extension to Arquillian is a simple way of checking that
 the code you want to test performs within the range you want it to. It
@@ -15,7 +16,7 @@ can also automatically catch any performance regressions that might be
 added to your applications and as Arquillian itself, it is very easy to
 use.
 
-== Code example:
+== Code example
 
 [source,java]
 ----
@@ -64,7 +65,7 @@ will be thrown. The threshold can be set with the parameter
 
 NOTE: How threshold is calculated: `resultsThreshold * newTime < oldTime`.
 
-== Maven setup example:
+== Maven setup example
 
 The only extra dependency needed is to add `arquillian-performance` to
 your pom.xml. Take a look at the
