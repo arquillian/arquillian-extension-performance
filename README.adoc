@@ -10,7 +10,7 @@
 :icons: font
 :toc: left
 
-The performance extension to Arquillian is a simple way of checking that
+The performance extension for Arquillian is a simple way of checking that
 the code you want to test performs within the range you want it to. It
 can also automatically catch any performance regressions that might be
 added to your applications and as Arquillian itself, it is very easy to
