@@ -12,6 +12,10 @@
 
 image:https://travis-ci.org/arquillian/arquillian-extension-performance.svg?branch=master["Build Status", link="https://travis-ci.org/arquillian/arquillian-extension-performance"]
 
+ifndef::generated-doc[]
+To read complete documentation visit http://arquillian.org/arquillian-extension-performance/
+endif::generated-doc[]
+
 The performance extension for Arquillian is a simple way of checking that
 the code you want to test performs within the range you want it to. It
 can also automatically catch any performance regressions that might be
