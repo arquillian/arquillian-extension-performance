@@ -1,10 +1,7 @@
 package org.jboss.arquillian.performance.ejb;
 
+public @Local interface WorkHard {
+    double workHard();
 
-public @Local
-interface WorkHard
-{
-   double workHard();
-   
-   double workVeryHard();
+    double workVeryHard();
 }

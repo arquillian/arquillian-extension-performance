@@ -19,7 +19,6 @@ package org.jboss.arquillian.performance.event;
 
 import org.jboss.arquillian.core.spi.LoadableExtension;
 
-
 /**
  * @author Ståle W. Pedersen <stale.pedersen@jboss.org>
  */
@@ -28,7 +27,6 @@ public class PerformanceExtension implements LoadableExtension {
     @Override
     public void register(ExtensionBuilder builder) {
         builder.observer(PerformanceTestParser.class)
-               .observer(PerformanceAnalyzer.class);
+            .observer(PerformanceAnalyzer.class);
     }
-
 }

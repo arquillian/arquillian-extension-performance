@@ -24,17 +24,15 @@ import java.lang.annotation.Target;
 /**
  * Specifies the maximum execution time allowed for a test method.
  * If the test method exceeds the specified time it throws an exception.
- * 
+ *
  * @author <a href="mailto:stale.pedersen@jboss.org">Stale W. Pedersen</a>
  * @version $Revision: 1.1 $
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
 public @interface Performance {
-   /**
-    * Specify how long the method maximum should take i ms
-    * 
-    * @return
-    */
-   double time();
+    /**
+     * Specify how long the method maximum should take i ms
+     */
+    double time();
 }

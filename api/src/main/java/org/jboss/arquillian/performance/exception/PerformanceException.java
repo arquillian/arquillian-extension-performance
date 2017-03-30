@@ -18,16 +18,13 @@ package org.jboss.arquillian.performance.exception;
 
 /**
  * A PerformanceException, will be thrown when a performance rule have been breached.
- * 
+ *
  * @author <a href="mailto:stale.pedersen@jboss.org">Stale W. Pedersen</a>
  * @version $Revision: 1.1 $
  */
 @SuppressWarnings("serial")
-public class PerformanceException extends Exception
-{
-   public PerformanceException(String msg)
-   {
-      super(msg);
-   }
-
+public class PerformanceException extends Exception {
+    public PerformanceException(String msg) {
+        super(msg);
+    }
 }

@@ -27,38 +27,32 @@ import org.jboss.arquillian.test.spi.annotation.SuiteScoped;
 import org.jboss.arquillian.test.spi.event.suite.BeforeClass;
 
 /**
- * 
  * A PerformanceRuleParser.
- * 
+ *
  * @author <a href="mailto:stale.pedersen@jboss.org">Stale W. Pedersen</a>
  * @version $Revision: 1.1 $
  */
-public class PerformanceTestParser 
-{
-   @Inject @SuiteScoped
-   private InstanceProducer<PerformanceSuiteResult> suiteResultInst;
+public class PerformanceTestParser {
+    @Inject @SuiteScoped
+    private InstanceProducer<PerformanceSuiteResult> suiteResultInst;
 
-   public void callback(@Observes BeforeClass event) throws Exception
-   {
-      parsePerformanceRules(event.getTestClass());
-   }
-   
-   public void parsePerformanceRules(TestClass testClass)
-   {
-      PerformanceTest performanceTest = (PerformanceTest) testClass.getAnnotation(PerformanceTest.class);
-      if(performanceTest != null)
-      {
-         PerformanceClassResult classPerformance = 
-            new PerformanceClassResult(performanceTest, testClass.getName());
-         
-         PerformanceSuiteResult suitePerformance = suiteResultInst.get();
-         if(suitePerformance == null)
-         {
-            suitePerformance = new PerformanceSuiteResult(classPerformance.getTestClassName());
-            suiteResultInst.set(suitePerformance);
-         }
-         
-         suitePerformance.addClassResult(testClass.getName(), classPerformance);
-      }  
-   }
+    public void callback(@Observes BeforeClass event) throws Exception {
+        parsePerformanceRules(event.getTestClass());
+    }
+
+    public void parsePerformanceRules(TestClass testClass) {
+        PerformanceTest performanceTest = (PerformanceTest) testClass.getAnnotation(PerformanceTest.class);
+        if (performanceTest != null) {
+            PerformanceClassResult classPerformance =
+                new PerformanceClassResult(performanceTest, testClass.getName());
+
+            PerformanceSuiteResult suitePerformance = suiteResultInst.get();
+            if (suitePerformance == null) {
+                suitePerformance = new PerformanceSuiteResult(classPerformance.getTestClassName());
+                suiteResultInst.set(suitePerformance);
+            }
+
+            suitePerformance.addClassResult(testClass.getName(), classPerformance);
+        }
+    }
 }

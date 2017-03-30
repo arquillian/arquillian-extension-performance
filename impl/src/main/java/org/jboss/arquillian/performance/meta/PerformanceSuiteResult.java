@@ -22,47 +22,39 @@ import java.util.Map;
 
 /**
  * A PerformanceSuiteResult.
- * 
+ *
  * @author <a href="mailto:stale.pedersen@jboss.org">Stale W. Pedersen</a>
  * @version $Revision: 1.1 $
  */
-public class PerformanceSuiteResult implements Serializable
-{
-   /** The serialVersionUID */
-   private static final long serialVersionUID = 1487390574111894654L;
-   
-   private String name;
-   private Map<String, PerformanceClassResult> classResults;
+public class PerformanceSuiteResult implements Serializable {
+    /** The serialVersionUID */
+    private static final long serialVersionUID = 1487390574111894654L;
 
-   public PerformanceSuiteResult(String name)
-   {
-      setName(name);
-      classResults = new HashMap<String, PerformanceClassResult>();
-   }
-   
-   public Map<String, PerformanceClassResult> getResults()
-   {
-      return classResults;
-   }
-   
-   public PerformanceClassResult getResult(String className)
-   {
-      return classResults.get(className);
-   }
+    private String name;
+    private Map<String, PerformanceClassResult> classResults;
 
-   public void addClassResult(String className, PerformanceClassResult result)
-   {
-      classResults.put(className, result);
-   }
+    public PerformanceSuiteResult(String name) {
+        setName(name);
+        classResults = new HashMap<String, PerformanceClassResult>();
+    }
 
-   public String getName()
-   {
-      return name;
-   }
+    public Map<String, PerformanceClassResult> getResults() {
+        return classResults;
+    }
 
-   private void setName(String name)
-   {
-      this.name = name;
-   }
+    public PerformanceClassResult getResult(String className) {
+        return classResults.get(className);
+    }
 
+    public void addClassResult(String className, PerformanceClassResult result) {
+        classResults.put(className, result);
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    private void setName(String name) {
+        this.name = name;
+    }
 }

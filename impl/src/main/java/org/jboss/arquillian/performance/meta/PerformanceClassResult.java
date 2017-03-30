@@ -21,65 +21,56 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.jboss.arquillian.performance.annotation.PerformanceTest;
+
 /**
  * A PerformanceClassResult.
- * 
+ *
  * @author <a href="mailto:stale.pedersen@jboss.org">Stale W. Pedersen</a>
  * @version $Revision: 1.1 $
  */
-public class PerformanceClassResult implements Serializable
-{
-   /** The serialVersionUID */
-   private static final long serialVersionUID = 6743015614324029428L;
-   
-   private List<PerformanceMethodResult> methodResults;
-   private PerformanceTest performanceSpecs;
-   private String testClassName;
-   
-   public PerformanceClassResult(PerformanceTest performanceSpecs, String testClassName)
-   {
-      setPerformanceSpecs(performanceSpecs);
-      setTestClassName(testClassName);
-      methodResults = new ArrayList<PerformanceMethodResult>();
-   }
+public class PerformanceClassResult implements Serializable {
+    /** The serialVersionUID */
+    private static final long serialVersionUID = 6743015614324029428L;
 
-   public List<PerformanceMethodResult> getMethodResults()
-   {
-      return methodResults;
-   }
-   
-   public PerformanceMethodResult getMethodResult(String methodName)
-   {
-      for(PerformanceMethodResult pmr : methodResults)
-         if(pmr.getTestMethod().equals(methodName))
-            return pmr;
-      
-      return null;
-   }
+    private List<PerformanceMethodResult> methodResults;
+    private PerformanceTest performanceSpecs;
+    private String testClassName;
 
-   public void addMethodResult(PerformanceMethodResult methodResult)
-   {
-      methodResults.add(methodResult);
-   }
+    public PerformanceClassResult(PerformanceTest performanceSpecs, String testClassName) {
+        setPerformanceSpecs(performanceSpecs);
+        setTestClassName(testClassName);
+        methodResults = new ArrayList<PerformanceMethodResult>();
+    }
 
-   public PerformanceTest getPerformanceSpecs()
-   {
-      return performanceSpecs;
-   }
+    public List<PerformanceMethodResult> getMethodResults() {
+        return methodResults;
+    }
 
-   private void setPerformanceSpecs(PerformanceTest performanceSpecs)
-   {
-      this.performanceSpecs = performanceSpecs;
-   }
+    public PerformanceMethodResult getMethodResult(String methodName) {
+        for (PerformanceMethodResult pmr : methodResults)
+            if (pmr.getTestMethod().equals(methodName))
+                return pmr;
 
-   public String getTestClassName()
-   {
-      return testClassName;
-   }
+        return null;
+    }
 
-   private void setTestClassName(String testClassName)
-   {
-      this.testClassName = testClassName;
-   }
-   
+    public void addMethodResult(PerformanceMethodResult methodResult) {
+        methodResults.add(methodResult);
+    }
+
+    public PerformanceTest getPerformanceSpecs() {
+        return performanceSpecs;
+    }
+
+    private void setPerformanceSpecs(PerformanceTest performanceSpecs) {
+        this.performanceSpecs = performanceSpecs;
+    }
+
+    public String getTestClassName() {
+        return testClassName;
+    }
+
+    private void setTestClassName(String testClassName) {
+        this.testClassName = testClassName;
+    }
 }

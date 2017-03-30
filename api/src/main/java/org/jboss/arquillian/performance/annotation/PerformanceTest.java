@@ -24,18 +24,18 @@ import java.lang.annotation.Target;
 
 /**
  * PerformanceTest defines a way of storing test results and compare them
- * with previously stored tests. If newer tests results are worse than a 
+ * with previously stored tests. If newer tests results are worse than a
  * specified threshold an exception will be thrown.
- * 
+ * <p>
  * It is possible to specify if you want to compare each test method or
  * the combined total time of all the test methods.
- * 
+ * <p>
  * How threshold is calculated:
  * threshold * previous_result < latest result.
  * Note that threshold can not be lower than 1.
- * 
+ * <p>
  * Test results are stored in the folder arq-tests on project root.
- * 
+ *
  * @author <a href="mailto:stale.pedersen@jboss.org">Stale W. Pedersen</a>
  * @version $Revision: 1.1 $
  */
@@ -44,17 +44,14 @@ import java.lang.annotation.Target;
 @Inherited
 public @interface PerformanceTest {
 
-   /**
-    * Set the threshold of comparing new and old results. Can not be lower than 1 (which is default). 
-    * 
-    * @return
-    */
-   double resultsThreshold() default 1d;
-   /**
-    * Will cause the performance check to merge previous results and only store the
-    * best result.
-    * 
-    * @return
-    */
-   boolean mergeTestResults() default false;
+    /**
+     * Set the threshold of comparing new and old results. Can not be lower than 1 (which is default).
+     */
+    double resultsThreshold() default 1d;
+
+    /**
+     * Will cause the performance check to merge previous results and only store the
+     * best result.
+     */
+    boolean mergeTestResults() default false;
 }

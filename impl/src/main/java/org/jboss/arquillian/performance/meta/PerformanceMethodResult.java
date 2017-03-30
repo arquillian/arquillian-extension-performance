@@ -23,62 +23,59 @@ import java.lang.reflect.Method;
 
 /**
  * A PerformanceMethodResult.
- * 
+ *
  * @author <a href="mailto:stale.pedersen@jboss.org">Stale W. Pedersen</a>
  * @version $Revision: 1.1 $
  */
-public class PerformanceMethodResult implements Serializable
-{
+public class PerformanceMethodResult implements Serializable {
 
-   /** The serialVersionUID */
-   private static final long serialVersionUID = 1249191155205920067L;
-   
-   private double maxTime;
-   private double actualTime;
-   private String testMethod;
-   
-   public PerformanceMethodResult(double maxTime, double actualTime, Method testMethod)
-   {
-      setMaxTime(maxTime);
-      setActualTime(actualTime);
-      setTestMethod(testMethod.getName());
-   }
-   public double getMaxTime()
-   {
-      return maxTime;
-   }
-   private void setMaxTime(double maxTime)
-   {
-      this.maxTime = maxTime;
-   }
-   public double getActualTime()
-   {
-      return actualTime;
-   }
-   private void setActualTime(double actualTime)
-   {
-      this.actualTime = actualTime;
-   }
-   public String getTestMethod()
-   {
-      return testMethod;
-   }
-   private void setTestMethod(String testMethod)
-   {
-      this.testMethod = testMethod;
-   }
-   public void compareResults(PerformanceMethodResult methodResult, double resultsThreshold) throws PerformanceException
-   {     
-      if(resultsThreshold < 1)
-         resultsThreshold = 1;
-      //System.out.println("Comparing "+testMethod+", was: "+actualTime+", latest result: "
-      //      +methodResult.getActualTime()+", threshold: "+resultsThreshold);
-      if(resultsThreshold * actualTime < methodResult.getActualTime())
-      {
-         throw new PerformanceException("Degrading results; earlier result for method: "+
-               testMethod+", was: "+actualTime+", latest result: "+methodResult.getActualTime()+
-               ", threshold: "+resultsThreshold);
-      }
-      
-   }
+    /** The serialVersionUID */
+    private static final long serialVersionUID = 1249191155205920067L;
+
+    private double maxTime;
+    private double actualTime;
+    private String testMethod;
+
+    public PerformanceMethodResult(double maxTime, double actualTime, Method testMethod) {
+        setMaxTime(maxTime);
+        setActualTime(actualTime);
+        setTestMethod(testMethod.getName());
+    }
+
+    public double getMaxTime() {
+        return maxTime;
+    }
+
+    private void setMaxTime(double maxTime) {
+        this.maxTime = maxTime;
+    }
+
+    public double getActualTime() {
+        return actualTime;
+    }
+
+    private void setActualTime(double actualTime) {
+        this.actualTime = actualTime;
+    }
+
+    public String getTestMethod() {
+        return testMethod;
+    }
+
+    private void setTestMethod(String testMethod) {
+        this.testMethod = testMethod;
+    }
+
+    public void compareResults(PerformanceMethodResult methodResult, double resultsThreshold)
+        throws PerformanceException {
+        if (resultsThreshold < 1)
+            resultsThreshold = 1;
+        //System.out.println("Comparing "+testMethod+", was: "+actualTime+", latest result: "
+        //      +methodResult.getActualTime()+", threshold: "+resultsThreshold);
+        if (resultsThreshold * actualTime < methodResult.getActualTime()) {
+            throw new PerformanceException("Degrading results; earlier result for method: " +
+                testMethod + ", was: " + actualTime + ", latest result: " + methodResult.getActualTime() +
+                ", threshold: " + resultsThreshold);
+        }
+    }
 }

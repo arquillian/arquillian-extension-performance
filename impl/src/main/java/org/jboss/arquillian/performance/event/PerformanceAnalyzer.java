@@ -36,16 +36,15 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * Compares and stores test durations. 
- *
+ * Compares and stores test durations.
+ * <p>
  * fired during test
  *
  * @author <a href="mailto:stale.pedersen@jboss.org">Stale W. Pedersen</a>
  * @version $Revision: 1.1 $
  */
 
-public class PerformanceAnalyzer
-{
+public class PerformanceAnalyzer {
     private final String folder = "arq-perf";  // TODO: should rewrite this some day
 
     private final SimpleDateFormat fileFormat = new SimpleDateFormat("dd.MM.yy.mm.ss");
@@ -56,8 +55,7 @@ public class PerformanceAnalyzer
     @Inject
     private Instance<TestResult> testResultInst;
 
-    public void callback(@Observes EventContext<Test> eventContext) throws Exception
-    {
+    public void callback(@Observes EventContext<Test> eventContext) throws Exception {
         //first let the test run
         eventContext.proceed();
         // then verify that the test performed within the specified time
@@ -66,17 +64,12 @@ public class PerformanceAnalyzer
 
         PerformanceSuiteResult suiteResult = suiteResultInst.get();
 
-        if (suiteResult != null)
-        {
-            try
-            {
+        if (suiteResult != null) {
+            try {
                 comparePerformanceSuiteResults(suiteResult, eventContext.getEvent().getTestMethod().getName());
-            }
-            catch (PerformanceException pe)
-            {
+            } catch (PerformanceException pe) {
                 TestResult result = testResultInst.get();
-                if (result != null)
-                {
+                if (result != null) {
                     result.setThrowable(pe);
                 }
             }
@@ -84,12 +77,10 @@ public class PerformanceAnalyzer
     }
 
     private void comparePerformanceSuiteResults(PerformanceSuiteResult suiteResult, String testMethod)
-            throws PerformanceException
-    {
+        throws PerformanceException {
         List<PerformanceSuiteResult> prevResults = findEarlierResults(suiteResult);
 
-        for (PerformanceSuiteResult result : prevResults)
-        {
+        for (PerformanceSuiteResult result : prevResults) {
             doCompareResults(result, suiteResult, testMethod);
         }
 
@@ -98,40 +89,28 @@ public class PerformanceAnalyzer
     }
 
     private void doCompareResults(PerformanceSuiteResult oldResult, PerformanceSuiteResult newResult, String testMethod)
-            throws PerformanceException
-    {
-        for (String className : oldResult.getResults().keySet())
-        {
+        throws PerformanceException {
+        for (String className : oldResult.getResults().keySet()) {
 
             PerformanceClassResult oldClassResult = oldResult.getResult(className);
-            if (oldClassResult.getMethodResult(testMethod) != null)
-            {
+            if (oldClassResult.getMethodResult(testMethod) != null) {
                 oldClassResult.getMethodResult(testMethod).compareResults(
-                        newResult.getResult(className).getMethodResult(testMethod),
-                        oldClassResult.getPerformanceSpecs().resultsThreshold());
+                    newResult.getResult(className).getMethodResult(testMethod),
+                    oldClassResult.getPerformanceSpecs().resultsThreshold());
             }
-
         }
-
     }
 
-
-    private List<PerformanceSuiteResult> findEarlierResults(final PerformanceSuiteResult currentResult)
-    {
+    private List<PerformanceSuiteResult> findEarlierResults(final PerformanceSuiteResult currentResult) {
         File perfDir = new File(System.getProperty("user.dir") + File.separator + folder);
-        File[] files = perfDir.listFiles(new FileFilter()
-        {
-            public boolean accept(File pathName)
-            {
+        File[] files = perfDir.listFiles(new FileFilter() {
+            public boolean accept(File pathName) {
                 return (pathName.getName().startsWith(currentResult.getName()));
             }
-
         });
         List<PerformanceSuiteResult> prevResults = new ArrayList<PerformanceSuiteResult>();
-        if (files != null)
-        {
-            for (File f : files)
-            {
+        if (files != null) {
+            for (File f : files) {
                 PerformanceSuiteResult result = getResultFromFile(f);
                 if (result != null)
                     prevResults.add(result);
@@ -140,20 +119,14 @@ public class PerformanceAnalyzer
         return prevResults;
     }
 
-    private PerformanceSuiteResult getResultFromFile(File file)
-    {
-        try
-        {
+    private PerformanceSuiteResult getResultFromFile(File file) {
+        try {
             FileInputStream fis = new FileInputStream(file);
             ObjectInputStream ois = new ObjectInputStream(fis);
             return (PerformanceSuiteResult) ois.readObject();
-        }
-        catch (IOException ioe)
-        {
+        } catch (IOException ioe) {
             return null;
-        }
-        catch (ClassNotFoundException e)
-        {
+        } catch (ClassNotFoundException e) {
             e.printStackTrace();
             return null;
         }
@@ -164,26 +137,22 @@ public class PerformanceAnalyzer
      * 2. generate file name
      * 3. save file
      *
-     * @param suiteResult that should be saved
+     * @param suiteResult
+     *     that should be saved
      */
-    private void storePerformanceSuiteResult(PerformanceSuiteResult suiteResult)
-    {
+    private void storePerformanceSuiteResult(PerformanceSuiteResult suiteResult) {
         String filename = suiteResult.getName() + "-" + fileFormat.format(new Date()) + ".ser";
         String currentPath = System.getProperty("user.dir") + File.separator + folder + File.separator;
         boolean fileStatus = true;
         if (!new File(currentPath).isDirectory())
             fileStatus = new File(currentPath).mkdirs();
-        if (fileStatus)
-        {
-            try
-            {
+        if (fileStatus) {
+            try {
                 FileOutputStream fos = new FileOutputStream(currentPath + filename);
                 ObjectOutputStream out = new ObjectOutputStream(fos);
                 out.writeObject(suiteResult);
                 out.close();
-            }
-            catch (IOException ex)
-            {
+            } catch (IOException ex) {
                 System.err.println("Storing test results failed.");
                 ex.printStackTrace();
             }
@@ -193,41 +162,41 @@ public class PerformanceAnalyzer
     /**
      * Verify that the test ended within specified time
      *
-     * @param event, the test
-     * @throws PerformanceException if the test did not end within the specified time
+     * @param event,
+     *     the test
+     *
+     * @throws PerformanceException
+     *     if the test did not end within the specified time
      */
     private void verifyPerformance(Test event) throws PerformanceException {
         TestResult result = testResultInst.get();
-        if(result != null)
-        {
+        if (result != null) {
             //check if we have set a threshold
             Performance performance = null;
-            Annotation[] annotations =  event.getTestMethod().getDeclaredAnnotations();
-            for(Annotation a : annotations)
-                if(a.annotationType().getName().equals(Performance.class.getCanonicalName()))
+            Annotation[] annotations = event.getTestMethod().getDeclaredAnnotations();
+            for (Annotation a : annotations)
+                if (a.annotationType().getName().equals(Performance.class.getCanonicalName()))
                     performance = (Performance) a;
 
-            if(performance != null)
-            {
+            if (performance != null) {
                 //System.out.println("For test: "+event.toString()+", it took: "+(result.getEnd()-result.getStart()));
-                if(performance.time() > 0 &&
-                        performance.time() < (result.getEnd()-result.getStart()))
-                {
+                if (performance.time() > 0 &&
+                    performance.time() < (result.getEnd() - result.getStart())) {
                     result.setStatus(TestResult.Status.FAILED);
                     result.setThrowable(
-                            new PerformanceException("The test didnt finish within the specified time: "
-                                    +performance.time()+"ms, it took "+(result.getEnd()-result.getStart())+"ms."));
+                        new PerformanceException("The test didnt finish within the specified time: "
+                            + performance.time() + "ms, it took " + (result.getEnd() - result.getStart()) + "ms."));
                 }
 
                 // fetch suiteResult, get the correct classResult and append the test to that
                 // classResult.
                 PerformanceSuiteResult suiteResult = suiteResultInst.get();
-                if(suiteResult != null) {
+                if (suiteResult != null) {
                     suiteResult.getResult(event.getTestClass().getName()).addMethodResult(
-                            new PerformanceMethodResult(
-                                    performance.time(),
-                                    (result.getEnd()-result.getStart()),
-                                    event.getTestMethod()));
+                        new PerformanceMethodResult(
+                            performance.time(),
+                            (result.getEnd() - result.getStart()),
+                            event.getTestMethod()));
                 }
             }
         }
