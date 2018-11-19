@@ -28,7 +28,7 @@
     <version.jboss_ejb3>3.1.0</version.jboss_ejb3>
     <version.cdi_api>1.0-SP1</version.cdi_api>
     <version.jsr250_api>1.0</version.jsr250_api>
-    <version.persistence_api>1.0</version.persistence_api>
+    <version.persistence_api>1.0.2</version.persistence_api>
   </properties>
 
   <profiles>
